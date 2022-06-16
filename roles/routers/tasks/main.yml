@@ -9,7 +9,7 @@
     - name: Set hostname to inventory hostname
       ios_config:
         lines:
-          - hostname {{ inventory_hostname }}
+          - hostname {{ test }}
     
     - name: Set password encryption
       ios_config:
@@ -18,6 +18,6 @@
 
     - name: Set interface ip
       ios_config:
-        parents: "GigabitEthernet1"
+        parents: "interface GigabitEthernet1"
         lines:
-          - "ip address {{ GI1 }} {{ subnet }}"
+          - ip address {{ GI1 }} {{ subnet }}

@@ -1,4 +1,4 @@
 [routers]
 test-R1 
-test-R2 
-test-R3 
+#test-R2 
+#test-R3 
