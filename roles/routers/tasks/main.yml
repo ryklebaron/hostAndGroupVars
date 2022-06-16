@@ -9,6 +9,8 @@
     - name: Backup router
       ios_config:
         backup: yes
+        backup_options:
+          dir_path: $PWD/backup
 
     - name: Set hostname to inventory hostname
       ios_config:
