@@ -1,0 +1,23 @@
+---
+
+- name: Configure basic settings
+  become: yes
+  hosts: routers
+  gather_facts: False
+  tasks:
+    
+    - name: Set hostname to inventory hostname
+      ios_config:
+        lines:
+          - hostname {{ inventory_hostname }}
+    
+    - name: Set password encryption
+      ios_config:
+        lines: 
+          - service password-encryption
+
+    - name: Set interface ip
+      ios_config:
+        parents: "GigabitEthernet1"
+        lines:
+          - "ip address {{ GI1 }} {{ subnet }}"
