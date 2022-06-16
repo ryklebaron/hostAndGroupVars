@@ -6,10 +6,14 @@
   gather_facts: False
   tasks:
     
+    - name: Backup router
+      ios_config:
+        backup: yes
+
     - name: Set hostname to inventory hostname
       ios_config:
         lines:
-          - hostname {{ test }}
+          - hostname {{ inventory_hostname }}
     
     - name: Set password encryption
       ios_config:
@@ -20,4 +24,29 @@
       ios_config:
         parents: "interface GigabitEthernet1"
         lines:
-          - ip address {{ GI1 }} {{ subnet }}
+          - ip address {{ GI1 }}
+
+    - name: Set interface ip
+      ios_config:
+        parents: "interface GigabitEthernet2"
+        lines:
+          - ip address {{ GI2 }}
+
+    - name: Set router ospf priority
+      ios_config:
+        parents: "interface GigabitEthernet1"
+        lines:
+          - ospf priority {{ ospf_priority }}
+
+    - name: Configure ospf 
+      ios_config:
+        parents: "router ospf 1"
+        lines:
+          - network {{ ospf_network_GI1 }} area 0
+          - network {{ ospf_network_GI2 }} area 0
+
+    - name: dhcp pool lan
+      ios_config:
+        parents: "ip dhcp pool lan"
+        lines:
+          - network {{ network }}
