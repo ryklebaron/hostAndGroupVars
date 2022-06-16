@@ -13,4 +13,6 @@ GI2_network: 192.168.199.0
 GI2_wildcard: 0.0.0.255
 
 
+
+
 ospf_priority: 200

@@ -59,4 +59,4 @@
     - name: Create new user with privilege 15
       ios_config:
         lines:
-          - username rykle privilege 15 secret Welkom01!
+          - username rykle privilege 15 secret cisco
