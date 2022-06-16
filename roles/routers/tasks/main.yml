@@ -24,13 +24,13 @@
       ios_config:
         parents: "interface GigabitEthernet1"
         lines:
-          - ip address {{ GI1 }}
+          - ip address {{ GI1_ip }} {{ GI1_subnetmask }}
 
     - name: Set interface ip
       ios_config:
         parents: "interface GigabitEthernet2"
         lines:
-          - ip address {{ GI2 }}
+          - ip address {{ GI2_ip }} {{ GI2_subnetmask }}
 
     - name: Set router ospf priority
       ios_config:
@@ -42,11 +42,19 @@
       ios_config:
         parents: "router ospf 1"
         lines:
-          - network {{ ospf_network_GI1 }} area 0
-          - network {{ ospf_network_GI2 }} area 0
+          - network {{ GI1_network }}  {{ GI1_subnetmask }} area 0
+          - network {{ GI2_network }}  {{ GI2_subnetmask }} area 0
 
     - name: dhcp pool lan
       ios_config:
         parents: "ip dhcp pool lan"
         lines:
-          - network {{ network }}
+          - network {{ GI1_network }}
+          - default-router {{ GI1_ip }}
+          - dns-server 1.1.1.1
+          - domain-name baron.intern
+    
+    - name: Create new user with privilege 15
+      ios_config:
+        lines:
+          - username rykle privilege 15 secret Welkom01!
